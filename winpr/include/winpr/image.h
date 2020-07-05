@@ -63,8 +63,10 @@ typedef struct _WINPR_BITMAP_CORE_HEADER WINPR_BITMAP_CORE_HEADER;
 
 #pragma pack(pop)
 
-#define WINPR_IMAGE_BITMAP		0
-#define WINPR_IMAGE_PNG			1
+#define WINPR_IMAGE_BITMAP 0
+#define WINPR_IMAGE_PNG 1
+
+#define WINPR_IMAGE_BMP_HEADER_LEN 54
 
 struct _wImage
 {
@@ -79,18 +81,21 @@ struct _wImage
 typedef struct _wImage wImage;
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-WINPR_API int winpr_bitmap_write(const char* filename, BYTE* data, int width, int height, int bpp);
+	WINPR_API int winpr_bitmap_write(const char* filename, const BYTE* data, int width, int height,
+	                                 int bpp);
+	WINPR_API BYTE* winpr_bitmap_construct_header(int width, int height, int bpp);
 
-WINPR_API int winpr_image_write(wImage* image, const char* filename);
-WINPR_API int winpr_image_read(wImage* image, const char* filename);
+	WINPR_API int winpr_image_write(wImage* image, const char* filename);
+	WINPR_API int winpr_image_read(wImage* image, const char* filename);
 
-WINPR_API int winpr_image_read_buffer(wImage* image, BYTE* buffer, int size);
+	WINPR_API int winpr_image_read_buffer(wImage* image, const BYTE* buffer, int size);
 
-WINPR_API wImage* winpr_image_new();
-WINPR_API void winpr_image_free(wImage* image, BOOL bFreeBuffer);
+	WINPR_API wImage* winpr_image_new();
+	WINPR_API void winpr_image_free(wImage* image, BOOL bFreeBuffer);
 
 #ifdef __cplusplus
 }
